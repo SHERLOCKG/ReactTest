@@ -1,11 +1,10 @@
 import React from "react";
 
 class Form extends React.Component {
-    // eslint-disable-next-line
     constructor(props) {
       super(props)
       this.state = {
-        value: "fuccccck"
+        value: "a"
       }
     }
 
@@ -41,17 +40,18 @@ class Form extends React.Component {
 
     handSubmit = (e) => {
         e.preventDefault()
-        this.props.addTask(this.state.value) 
-        // this.setState((preState, props) => {
-        //     return { value: this.state.value + 1 }
-        // })
+        if (this.state.value) {
+            this.props.addTask(this.state.value) 
+            this.setState((preState, props) => {
+                return { value: "" }
+            })
+        }
     }
 
     onChange = (e) => {
         this.setState((preState, props) => {
             return { value: e.target.value }
         })
-        console.log("uuuuu")
     }
 }
 
@@ -60,7 +60,10 @@ const FForm = (props) => {
 
     const handSubmit = (e) => {
         e.preventDefault()
-        props.addTask(value) 
+        if (value) {
+            props.addTask(value)
+            setValue("")
+        }
     }
 
     const onChange = (e) => {
