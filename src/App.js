@@ -17,9 +17,14 @@ class App extends React.Component {
     this.addTask = this.addTask.bind(this)
     this.toggleTaskCompleted = this.toggleTaskCompleted.bind(this)
     this.deleteTask = this.deleteTask.bind(this)
+    this.editTask = this.editTask.bind(this)
 
     this.state = {
-      tasks: props.data,
+      tasks: [
+        { id: "todo-0", name: "Eat", completed: true },
+        { id: "todo-1", name: "Sleep", completed: false },
+        { id: "todo-2", name: "Repeat", completed: false }
+      ],
       filter: "All"
     }
   }
@@ -61,6 +66,7 @@ class App extends React.Component {
   }
   
   render() {
+    console.log('render apps')
     const taskList = this.state.tasks.filter(FILTER_MAP[this.state.filter]).map((task) => (
       <Todo
         id={task.id}
@@ -88,7 +94,7 @@ class App extends React.Component {
     return (
       <div className="todoapp stack-large">
         <h1>TodoMatic</h1>
-        <Form addTask={this.addTask} test="test" />
+        <Form addTask={this.addTask} />
         <div className="filters btn-group stack-exception">
           {filterButtons}
         </div>

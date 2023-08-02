@@ -1,4 +1,5 @@
 import React from "react";
+import {TasksContext} from "./../store"
 
 class Form extends React.Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class Form extends React.Component {
 
     handSubmit = (e) => {
         e.preventDefault()
+        console.log('addq')
         if (this.state.value) {
             this.props.addTask(this.state.value) 
             this.setState((preState, props) => {
@@ -57,11 +59,14 @@ class Form extends React.Component {
 
 const FForm = (props) => {
     const [value, setValue] = React.useState()
+    const {screenX: x, screenY: y} = MousePoint()
+    const context = React.useContext(TasksContext)
 
     const handSubmit = (e) => {
         e.preventDefault()
         if (value) {
-            props.addTask(value)
+            // props.addTask(value)
+            context.dispatch({type: "add", name: value})
             setValue("")
         }
     }
@@ -74,7 +79,7 @@ const FForm = (props) => {
         <form>
             <h2 className="label-wrapper">
                 <label htmlFor="new-todo-input" className="label__lg">
-                    What needs to be done?
+                    What needs to be done? ({x}, {y})
                 </label>
             </h2>
             <input
@@ -91,6 +96,24 @@ const FForm = (props) => {
             </button>
         </form>
     )
+}
+
+function MousePoint() {
+    const [screenX, setScreenX] = React.useState(0)
+    const [screenY, setScreenY] = React.useState(0)
+
+    React.useEffect(() => {
+        const a = (e) => {
+            setScreenX(e.clientX)
+            setScreenY(e.clientY)
+        }
+        console.log('effect')
+        window.addEventListener("mousemove", a)
+        return () => {
+            window.removeEventListener("mousemove", a)
+        }
+    }, [])
+    return {screenX, screenY}
 }
 
 export { Form, FForm }

@@ -1,8 +1,10 @@
 import React from "react";
+import {TasksContext} from "./../store"
 
 const Todo = (props) => {
   const [newName, setNewName] = React.useState("")
   const [isEditing, setIsEditing] = React.useState(false)
+  const context = React.useContext(TasksContext)
 
   const editingTemplate = (
     <form className="stack-small">
@@ -31,7 +33,7 @@ const Todo = (props) => {
           id={props.id}
           type="checkbox"
           defaultChecked={props.completed}
-          onChange={() => props.toggleTaskCompleted(props.id)}
+          onChange={() => context.dispatch({type: 'toggleTaskCompleted', id: props.id})}
         />
         <label className="todo-label" htmlFor={props.id}>
           {props.name}
@@ -44,7 +46,7 @@ const Todo = (props) => {
         <button
           type="button"
           className="btn btn__danger"
-          onClick={() => props.deleteTask(props.id)}>
+          onClick={() => context.dispatch({type: 'delete', id: props.id})}>
           Delete <span className="visually-hidden">{props.name}</span>
         </button>
       </div>
@@ -57,36 +59,13 @@ const Todo = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault()
-    props.editTask(props.id, newName)
+    console.log('sadasdasd')
+    context.dispatch({type: 'edit', id: props.id, newName: newName})
     setNewName("")
     setIsEditing(false)
   }
 
   return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>
-
-  return (
-      <li className="todo stack-small">
-        <div className="c-cb">
-          <input 
-            id={props.id} 
-            type="checkbox" 
-            defaultChecked={props.completed} 
-            onChange={() => props.toggleTaskCompleted(props.id)}
-          />
-          <label className="todo-label" htmlFor={props.id}>
-            {props.name}
-          </label>
-        </div>
-        <div className="btn-group">
-          <button type="button" className="btn">
-            Edit <span className="visually-hidden">{props.name}</span>
-          </button>
-          <button type="button" className="btn btn__danger" onClick={() => props.deleteTask(props.id)}>
-            Delete <span className="visually-hidden">{props.name}</span>
-          </button>
-        </div>
-      </li>
-  )
 }
 
 export { Todo }
