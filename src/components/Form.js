@@ -14,6 +14,7 @@ class Form extends React.Component {
     componentDidMount() {}
     componentDidCatch() {}
     shouldComponentUpdate() { return true }
+    getSnapshotBeforeUpdate() {}
 
     render() {
         return (
@@ -29,7 +30,7 @@ class Form extends React.Component {
                     className="input input__lg"
                     name="text"
                     autoComplete="off"
-                    value={this.state.value}
+                    // value={this.state.value}
                     onChange={this.onChange}
                 />
                 <button type="submit" className="btn btn__primary btn__lg" onClick={this.handSubmit}>

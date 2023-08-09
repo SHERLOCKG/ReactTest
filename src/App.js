@@ -18,7 +18,7 @@ class App extends React.Component {
     this.toggleTaskCompleted = this.toggleTaskCompleted.bind(this)
     this.deleteTask = this.deleteTask.bind(this)
     this.editTask = this.editTask.bind(this)
-
+    
     this.state = {
       tasks: [
         { id: "todo-0", name: "Eat", completed: true },

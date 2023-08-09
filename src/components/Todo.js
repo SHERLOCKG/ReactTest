@@ -4,6 +4,9 @@ const Todo = (props) => {
   const [newName, setNewName] = React.useState("")
   const [isEditing, setIsEditing] = React.useState(false)
 
+  const editFieldRef = React.useRef(null)
+  const editButtonRef = React.useRef(null)
+
   const editingTemplate = (
     <form className="stack-small">
       <div className="form-group">
